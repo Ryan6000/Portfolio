@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ryan Webber – Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f5f5f5;
+      --bg-alt: #ffffff;
+      --text: #222222;
+      --muted: #777777;
+      --accent: #3b6ea8;
+      --border: #e0e0e0;
+      --max-width: 1100px;
+      --radius: 18px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Layout utilities */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 4rem 0;
+    }
+
+    @media (min-width: 768px) {
+      section {
+        padding: 5rem 0;
+      }
+    }
+
+    /* Header / Nav */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      background: rgba(245, 245, 245, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(224, 224, 224, 0.6);
+      transition: box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    header.scrolled {
+      background: rgba(245, 245, 245, 0.95);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.92rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 0.15rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.2s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+    white-space: nowrap;
+    flex-shrink: 0;
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    @media (min-width: 860px) {
+      .nav-cta {
+        display: inline-flex;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .nav-cta {
+      width: 100%;
+      justify-content: center;
+      margin-top: 0.6rem;
+      }
+    }
+
+
+    @media (max-width: 900px) {
+      .nav,
+      .nav-inner,
+      .nav-links {
+      flex-wrap: wrap;
+      }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.88rem;
+      background: #fafafa;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease,
+        transform 0.1s ease, border-color 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      padding-top: 5rem; /* header space */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.05)),
+        url("https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=1600");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transform-origin: center;
+      transition: transform 0.4s ease-out;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.75)
+      );
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      text-align: left;
+      max-width: 650px;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .hero-kicker {
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4vw + 1rem, 3.4rem);
+      line-height: 1.05;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-title span {
+      font-weight: 300;
+      opacity: 0.85;
+    }
+
+    .hero-text {
+      max-width: 30rem;
+      font-size: 0.98rem;
+      color: rgba(255, 255, 255, 0.84);
+      margin-bottom: 1.7rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .hero-subnote {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 0.4rem;
+    }
+
+    /* Parallax band */
+    .parallax-band {
+      position: relative;
+      padding: 4rem 0;
+      margin-top: -2rem;
+    }
+
+    .parallax-inner {
+      border-radius: var(--radius);
+      background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.45)),
+        url("https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1600");
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-soft);
+      transform: translateY(0);
+      transition: transform 0.4s ease-out;
+    }
+
+    .parallax-inner h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .parallax-inner p {
+      max-width: 29rem;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Section headings */
+    .section-heading {
+      margin-bottom: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .section-heading h2 {
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .section-heading p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 28rem;
+    }
+
+    /* Projects */
+    .projects {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .projects-grid {
+      display: grid;
+      gap: 1.8rem;
+    }
+
+    @media (min-width: 720px) {
+      .projects-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .project-card {
+      border-radius: var(--radius);
+      background: var(--bg-alt);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-image img {
+      transform: scale(1.06);
+    }
+
+    .project-body {
+      padding: 1.2rem 1.3rem 1.4rem;
+    }
+
+    .project-title {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .project-meta {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .project-actions {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      background: #fafafa;
+    }
+
+    /* Skills */
+    .skills {
+      background: var(--bg);
+    }
+
+    .skills-grid {
+      display: grid;
+      gap: 1.4rem 1.8rem;
+    }
+
+    @media (min-width: 720px) {
+      .skills-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .skill-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .skill-title {
+      font-weight: 500;
+    }
+
+    .skill-text {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Gallery */
+    .gallery {
+      background: var(--bg-alt);
+    }
+
+    .gallery-strip {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+    }
+
+    .gallery-strip::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .gallery-strip::-webkit-scrollbar-track {
+      background: #eee;
+    }
+
+    .gallery-strip::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 999px;
+    }
+
+    .gallery-item {
+      flex: 0 0 260px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: #000;
+    }
+
+    .gallery-item img {
+      height: 180px;
+      width: 100%;
+      object-fit: cover;
+      opacity: 0.95;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+
+    .gallery-caption {
+      padding: 0.6rem 0.9rem 0.8rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    /* Contact / footer */
+    .contact {
+      background: var(--bg);
+    }
+
+    .contact-layout {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+        
+      }
+    }
+    
+
+    .contact-card {
+      border-radius: var(--radius);
+      background: var(--bg-alt);
+      box-shadow: var(--shadow-soft);
+      padding: 1.8rem 1.6rem;
+    }
+
+    .contact-card h3 {
+      margin-bottom: 0.4rem;
+      font-size: 1.2rem;
+    }
+
+    .contact-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 28px;
+      margin-top: 18px;
+    }
+
+    .contact-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.18rem;
+    }
+
+    .contact-highlight {
+      font-size: 0.95rem;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+      .container-wide {
+       max-width: 1400px;
+       margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    @media (max-width: 850px) {
+      .container-wide {
+      padding: 0 16px;
+      }
+    }
+
+    .contact-card {
+     width: 100%;
+    }
+
+    .contact-card,
+    .contact-ayout,
+    .contact-grid,
+    .contact-grid > div {
+      min-width: 0;
+    }
+
+    .contact-highlight a {
+      color: inherit;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .contact-highlight a:hover {
+      text-decoration: underline;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .field label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field textarea {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.7rem;
+      font: inherit;
+      resize: vertical;
+      background: #fafafa;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(59, 110, 168, 0.35);
+    }
+
+    footer {
+      padding: 1.4rem 0 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer a {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fixed background for subtle zoom effect -->
+  <div class="hero-bg" id="heroBg"></div>
+
+  <header id="siteHeader">
+    <nav class="nav">
+      <div class="logo">
+        Ryan <span>Webber</span>
+      </div>
+      <div class="nav-links">
+        <a href="#projects">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="btn btn-primary nav-cta" onclick="scrollToSection('contact')">
+        Let’s talk
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-kicker">Minimal interfaces, thoughtful systems</div>
+        <h1 class="hero-title">
+          Hi, I’m Ryan.<br />
+          <span>I design and build calm, usable experiences.</span>
+        </h1>
+        <p class="hero-text">
+          Developer, designer, and instructor with a focus on clear structure,
+          subtle motion, and interfaces that don’t shout. I like taking complex
+          ideas and turning them into websites that feel obvious in the best way.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToSection('projects')">
+            View selected work
+          </button>
+          <button class="btn" onclick="scrollToSection('skills')">
+            See capabilities
+          </button>
+        </div>
+        <div class="hero-subnote">
+          Front-end development · UX thinking · Technical communication
+        </div>
+      </div>
+    </section>
+
+    <!-- PARALLAX BAND -->
+    <section class="parallax-band">
+      <div class="container">
+        <div class="parallax-inner" id="parallaxCard">
+          <h2>A portfolio for people who build things.</h2>
+          <p>
+            I’ve taught students how to ship projects, built interactive sites,
+            and worked across design and code. This page is intentionally simple:
+            it’s here to show how I think about clarity, hierarchy, and small,
+            meaningful interactions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects" id="projects">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Selected work</h2>
+          <p>
+            A few projects that show how I approach structure, interaction, and
+            communication. More available on request.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+
+          <article class="project-card">
+            <div class="project-image">
+              <img src="imgs/Screenshot 2026-02-05 135823.png"
+                   alt="Chart from the Dashboard"
+                   style="margin: 20px">
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Analytics Dashboard</h3>
+              <div class="project-meta">
+                I built this dashboard to manage a large, project-based senior course program, providing an at-a-glance 
+                view of team progress, performance, and support needs for 120 students across 21 teams. It combines group 
+                status and progress visualizations with a persistent team detail panel to enable timely, actionable instructional 
+                decisions.
+              </div>
+              <div class="project-tags">
+                <span class="pill">UI Design</span>
+                <span class="pill">Prototyping</span>
+                <span class="pill">Data viz</span>
+              </div>
+              <div class="project-actions">
+                <a href="AnalyticsDashboard/main.html" class="btn" aria-label="View project prototype">View prototype</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-image">
+              <img src="https://images.pexels.com/photos/196646/pexels-photo-196646.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                   alt="Clean UI on a laptop and phone representing a responsive site">
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Minimal Hotel Site</h3>
+              <div class="project-meta">
+                A very simple single-page marketing site for a boutique hotel concept.
+                Subtle motion, parallax section, responsive layout. This could be applied
+                to a restaurant, government services, commercial center, or educational
+                website very easily.
+              </div>
+              <div class="project-tags">
+                <span class="pill">HTML</span>
+                <span class="pill">CSS</span>
+                <span class="pill">JS</span>
+                <span class="pill">Responsive</span>
+              </div>
+              <div class="project-actions">
+                <a href="WebberHotelProject/landing.html" class="btn" aria-label="View project case study">Case study</a>
+              </div>
+            </div>
+          </article>
+
+
+
+         <!--  <article class="project-card">
+            <div class="project-image">
+              <img src="https://images.pexels.com/photos/3746319/pexels-photo-3746319.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                   alt="Person sketching wireframes on paper">
+            </div>
+            <div class="project-body">
+              <h3 class="project-title">Course Site & Studio</h3>
+              <div class="project-meta">
+                Lightweight course website template used to guide students
+                through multi-week design and development projects.
+              </div>
+              <div class="project-tags">
+                <span class="pill">Information architecture</span>
+                <span class="pill">Teaching</span>
+                <span class="pill">Content design</span>
+              </div>
+              <div class="project-actions">
+                <a href="#" class="btn" aria-label="View project details">View details</a>
+              </div>
+            </div>
+          </article> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills" id="skills">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Skills</h2>
+          <p>
+            The mix of things I’m comfortable owning, and the areas where I’m
+            most useful in a team.
+          </p>
+        </div>
+
+        <div class="skills-grid">
+          <div class="skill-block">
+            <div class="skill-title">Front-end development</div>
+            <div class="skill-text">
+              Semantic HTML, modern CSS (Flexbox, Grid), vanilla JavaScript,
+              responsive layouts, basic animations and micro-interactions.
+            </div>
+          </div>
+
+          <div class="skill-block">
+            <div class="skill-title">Interaction & UX thinking</div>
+            <div class="skill-text">
+              Structuring pages, designing flows, clarifying hierarchy,
+              making sure users aren’t lost or overwhelmed.
+            </div>
+          </div>
+
+          <div class="skill-block">
+            <div class="skill-title">Teaching & communication</div>
+            <div class="skill-text">
+              Breaking down concepts, designing projects, giving feedback,
+              and supporting people as they learn new tools and skills.
+            </div>
+          </div>
+
+          <div class="skill-block">
+            <div class="skill-title">Prototyping & visuals</div>
+            <div class="skill-text">
+              Low- to mid-fidelity prototypes, clean typography, grid-based
+              layouts, and visual systems that scale.
+            </div>
+          </div>
+
+          <div class="skill-block">
+            <div class="skill-title">Process & documentation</div>
+            <div class="skill-text">
+              Writing clear docs, assignment briefs, project prompts, and
+              post-mortems that people can actually use.
+            </div>
+          </div>
+
+          <div class="skill-block">
+            <div class="skill-title">Working with AI tools</div>
+            <div class="skill-text">
+              Using AI to explore ideas, draft content, and accelerate parts
+              of the workflow—without losing human judgment or taste.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <div class="section-heading">
+<!--           <h2>Snapshots</h2>
+          <p>
+            A small visual stream: interfaces, in-progress layouts, and
+            details that make projects feel finished.
+          </p>
+        </div>
+
+        <div class="gallery-strip">
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/196645/pexels-photo-196645.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                 alt="Minimal web layout on a laptop screen">
+            <figcaption class="gallery-caption">
+              Early version of a single-page layout.
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                 alt="Developer desk with laptop and sketchbook">
+            <figcaption class="gallery-caption">
+              Sketching flows before writing code.
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/1181670/pexels-photo-1181670.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                 alt="Team meeting looking at a screen">
+            <figcaption class="gallery-caption">
+              Walking through interactions with students.
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                 alt="Code editor with front-end code">
+            <figcaption class="gallery-caption">
+              The quieter part of the process.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section> -->
+
+    <!-- CONTACT -->
+    <section class="contact contact-wide" id="contact">
+      <div class="container-wide">
+        <div class="section-heading">
+          <h2>Contact</h2>
+          <p>
+            If you’d like to collaborate, talk about work, or see more projects,
+            this is the easiest way to start.
+          </p>
+        </div>
+
+        <div class="contact-layout">
+          <div class="contact-card">
+            <h3>Let’s work on something</h3>
+            <p>
+              I’m interested in roles and projects that combine design, front-end
+              development, and helping people learn or use tools better.
+            </p>
+
+            <div class="contact-grid">
+              <div>
+                <div class="contact-label">Location</div>
+                <div class="contact-highlight">Marietta, GA (EST)</div>
+              </div>
+              <div>
+                <div class="contact-label">Email</div>
+                <div class="contact-highlight">
+                  <a href="mailto:webber.rv@gmail.com">webber.rv@gmail.com</a>
+                </div>
+              </div>
+              <div>
+                <div class="contact-label">Focus</div>
+                <div class="contact-highlight">
+                  Front-end & UX, curriculum, technical communication
+                </div>
+              </div>
+            </div>
+          </div>
+
+ <!--          <div>
+            <form class="contact-form" action="mailto:YOUR_EMAIL_HERE" method="POST" enctype="text/plain">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" required />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required />
+              </div>
+              <div class="field">
+                <label for="topic">What’s this about?</label>
+                <input id="topic" name="topic" type="text"
+                       placeholder="e.g. role, project, portfolio feedback" />
+              </div>
+              <div class="field">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4"
+                          placeholder="A couple of sentences is plenty."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Send message
+              </button>
+              <div id="formMessage"
+                   style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem;"></div>
+            </form>
+          </div> -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div>© <span id="year"></span> Ryan Webber. All rights reserved.</div>
+      <div>
+        Concept portfolio. Images via
+        <a href="https://www.pexels.com/" target="_blank" rel="noreferrer">Pexels</a>.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll helper
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+
+    // Header shadow + hero zoom + parallax card
+    const header = document.getElementById("siteHeader");
+    const heroBg = document.getElementById("heroBg");
+    const parallaxCard = document.getElementById("parallaxCard");
+
+    function onScroll() {
+      const y = window.pageYOffset || document.documentElement.scrollTop;
+
+      // Header state
+      if (y > 10) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+
+      // Hero subtle zoom
+      const zoom = 1 + Math.min(y / 2000, 0.06);
+      heroBg.style.transform = "scale(" + zoom.toFixed(3) + ")";
+
+      // Parallax card slight movement
+      const cardOffset = Math.min(y / 8, 40);
+      parallaxCard.style.transform = "translateY(" + cardOffset.toFixed(1) + "px)";
+    }
+
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Fake form handler (front-end only)
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const msg = document.getElementById("formMessage");
+      msg.textContent = "Thanks for reaching out. I’ll get back to you soon.";
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>

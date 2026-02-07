@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Project Analytics Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <header class="dashboard-header">
+    <div>
+      <h1>Capstone Project Dashboard</h1>
+      <p id="subtitle">Sample data loaded (upload a CSV to replace).</p>
+    </div>
+
+    <div class="header-actions">
+      <label class="file-btn">
+        Load CSV
+        <input id="csvInput" type="file" accept=".csv,text/csv" />
+      </label>
+      <button id="loadSampleBtn" class="btn-secondary" type="button">Load sample</button>
+    </div>
+  </header>
+
+  <main class="dashboard grid-layout">
+
+    <!-- LEFT: MAIN CONTENT -->
+    <div class="main-col">
+
+      <!-- KPI ROW -->
+      <section class="kpi-row" aria-label="Key metrics">
+        <div class="kpi">
+          <span class="kpi-label">Stellar</span>
+          <span class="kpi-value" id="kpiOnTrack">—</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Acceptable</span>
+          <span class="kpi-value" id="kpiAtRisk">—</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Needs Attention</span>
+          <span class="kpi-value" id="kpiBehind">—</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">Avg. Project Score</span>
+          <span class="kpi-value" id="kpiAvgScore">—</span>
+        </div>
+      </section>
+
+      <!-- CHARTS -->
+      <section class="charts">
+        <div class="charts-header">
+          <h2>Charts</h2>
+          <div class="segmented">
+            <button class="seg-btn is-active" data-chart="status" type="button">Status</button>
+            <button class="seg-btn" data-chart="stage" type="button">Stage</button>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <canvas id="chartCanvas" width="900" height="240" aria-label="Chart"></canvas>
+          <p class="chart-hint">Tip: click a bar to filter the table.</p>
+        </div>
+      </section>
+
+      <!-- TABLE -->
+      <section class="project-table">
+        <div class="table-header">
+          <h2>Project Progress</h2>
+          <div class="table-controls">
+            <input id="searchInput" type="search" placeholder="Search teams…" />
+            <button id="clearFiltersBtn" class="btn-secondary" type="button">Clear filters</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-key="team" role="button" tabindex="0">Team</th>
+                <th data-key="stage" role="button" tabindex="0">Stage</th>
+                <th data-key="last_update" role="button" tabindex="0">Last Update</th>
+                <th data-key="avg_score" role="button" tabindex="0">Avg. Score</th>
+                <th data-key="status" role="button" tabindex="0">Status</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr><td colspan="5" class="empty">Loading sample data…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT: DETAIL PANEL -->
+    <aside class="detail-panel" id="detailPanel" aria-label="Team details">
+      <div class="detail-header">
+        <h3 id="detailTitle">Team details</h3>
+        <button id="closePanelBtn" class="icon-btn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <div class="detail-body" id="detailBody">
+        <p class="muted">Click a row to view details.</p>
+      </div>
+    </aside>
+
+  </main>
+
+ <script src="./app.js"></script>
+</body>
+</html>

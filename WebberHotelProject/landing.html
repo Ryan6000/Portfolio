@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurora Hotel – Coastal Retreat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f5f5f5;
+      --bg-alt: #ffffff;
+      --text: #222222;
+      --muted: #777777;
+      --accent: #c88c4a;
+      --border: #e0e0e0;
+      --max-width: 1100px;
+      --radius: 18px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Layout utilities */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 4rem 0;
+    }
+
+    @media (min-width: 768px) {
+      section {
+        padding: 5rem 0;
+      }
+    }
+
+    /* Header / Nav */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      background: rgba(245, 245, 245, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(224, 224, 224, 0.6);
+      transition: box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    header.scrolled {
+      background: rgba(245, 245, 245, 0.95);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.92rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 0.15rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.2s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    @media (min-width: 860px) {
+      .nav-cta {
+        display: inline-flex;
+      }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.88rem;
+      background: #fafafa;
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease,
+        transform 0.1s ease, border-color 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn:hover {
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      padding-top: 5rem; /* header space */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.05)),
+        url("https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=1600");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1);
+      transform-origin: center;
+      transition: transform 0.4s ease-out;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.55),
+        rgba(0, 0, 0, 0.75)
+      );
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      text-align: left;
+      max-width: 650px;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    .hero-kicker {
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4vw + 1rem, 3.4rem);
+      line-height: 1.05;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-title span {
+      font-weight: 300;
+      opacity: 0.85;
+    }
+
+    .hero-text {
+      max-width: 30rem;
+      font-size: 0.98rem;
+      color: rgba(255, 255, 255, 0.84);
+      margin-bottom: 1.7rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .hero-subnote {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 0.4rem;
+    }
+
+    /* Parallax band */
+    .parallax-band {
+      position: relative;
+      padding: 4rem 0;
+      margin-top: -2rem;
+    }
+
+    .parallax-inner {
+      border-radius: var(--radius);
+      background-image:
+        linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.35)),
+        url("https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1600");
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-soft);
+      transform: translateY(0);
+      transition: transform 0.4s ease-out;
+    }
+
+    .parallax-inner h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .parallax-inner p {
+      max-width: 29rem;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Section headings */
+    .section-heading {
+      margin-bottom: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .section-heading h2 {
+      font-size: 1.6rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .section-heading p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 28rem;
+    }
+
+    /* Rooms */
+    .rooms {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .rooms-grid {
+      display: grid;
+      gap: 1.8rem;
+    }
+
+    @media (min-width: 720px) {
+      .rooms-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .room-card {
+      border-radius: var(--radius);
+      background: var(--bg-alt);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .room-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .room-image img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 0.3s ease;
+    }
+
+    .room-card:hover .room-image img {
+      transform: scale(1.06);
+    }
+
+    .room-body {
+      padding: 1.2rem 1.3rem 1.4rem;
+    }
+
+    .room-title {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .room-meta {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .room-price {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.9rem;
+    }
+
+    .room-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      background: #fafafa;
+    }
+
+    /* Amenities */
+    .amenities {
+      background: var(--bg);
+    }
+
+    .amenities-grid {
+      display: grid;
+      gap: 1.4rem 1.8rem;
+    }
+
+    @media (min-width: 720px) {
+      .amenities-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .amenity {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .amenity-title {
+      font-weight: 500;
+    }
+
+    .amenity-text {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Gallery */
+    .gallery {
+      background: var(--bg-alt);
+    }
+
+    .gallery-strip {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+    }
+
+    .gallery-strip::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .gallery-strip::-webkit-scrollbar-track {
+      background: #eee;
+    }
+
+    .gallery-strip::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 999px;
+    }
+
+    .gallery-item {
+      flex: 0 0 260px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      background: #000;
+    }
+
+    .gallery-item img {
+      height: 180px;
+      width: 100%;
+      object-fit: cover;
+      opacity: 0.95;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+
+    .gallery-caption {
+      padding: 0.6rem 0.9rem 0.8rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    /* Contact / footer */
+    .contact {
+      background: var(--bg);
+    }
+
+    .contact-layout {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .contact-layout {
+        grid-template-columns: 1.2fr 1fr;
+      }
+    }
+
+    .contact-card {
+      border-radius: var(--radius);
+      background: var(--bg-alt);
+      box-shadow: var(--shadow-soft);
+      padding: 1.8rem 1.6rem;
+    }
+
+    .contact-card h3 {
+      margin-bottom: 0.4rem;
+      font-size: 1.2rem;
+    }
+
+    .contact-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      gap: 0.9rem;
+      font-size: 0.88rem;
+    }
+
+    .contact-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.18rem;
+    }
+
+    .contact-highlight {
+      font-size: 0.95rem;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .field label {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .field input,
+    .field textarea {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 0.55rem 0.7rem;
+      font: inherit;
+      resize: vertical;
+      background: #fafafa;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(200, 140, 74, 0.35);
+    }
+
+    footer {
+      padding: 1.4rem 0 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer a {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.2em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fixed background for subtle zoom effect -->
+  <div class="hero-bg" id="heroBg"></div>
+
+  <header id="siteHeader">
+    <nav class="nav">
+      <div class="logo">
+        Aurora <span>Hotel</span>
+      </div>
+      <div class="nav-links">
+        <a href="#rooms">Rooms</a>
+        <a href="#amenities">Amenities</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="btn btn-primary nav-cta" onclick="scrollToSection('contact')">
+        Book a Stay
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-kicker">Minimal coastal retreat</div>
+        <h1 class="hero-title">
+          Aurora Hotel<br />
+          <span>Where the city slows down by the sea.</span>
+        </h1>
+        <p class="hero-text">
+          A quiet, design-forward hotel overlooking the water. Sun-washed rooms,
+          soft linens, and just enough distance from everything urgent.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToSection('contact')">
+            Check availability
+          </button>
+          <button class="btn" onclick="scrollToSection('rooms')">
+            View rooms
+          </button>
+        </div>
+        <div class="hero-subnote">
+          Boutique stays • Late checkout • Thoughtful hospitality
+        </div>
+      </div>
+    </section>
+
+    <!-- PARALLAX BAND -->
+    <section class="parallax-band">
+      <div class="container">
+        <div class="parallax-inner" id="parallaxCard">
+          <h2>Designed for stillness.</h2>
+          <p>
+            Every room in Aurora faces the horizon. No printed directories,
+            no televisions by default, no noise you didn’t bring with you.
+            Just light, air, and the sound of the tide under your window.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROOMS -->
+    <section class="rooms" id="rooms">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Rooms</h2>
+          <p>
+            Three simple room types. Same calm aesthetic, different ways to
+            stretch out.
+          </p>
+        </div>
+
+        <div class="rooms-grid">
+          <article class="room-card">
+            <div class="room-image">
+              <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                   alt="Minimal guest room with king bed and soft natural light">
+            </div>
+            <div class="room-body">
+              <h3 class="room-title">Harbor King</h3>
+              <div class="room-meta">
+                For solo travelers or couples. 1–2 guests · 28 m² · King bed
+              </div>
+              <div class="room-price">
+                From $210 / night, includes slow breakfast.
+              </div>
+              <div class="room-tags">
+                <span class="pill">Harbor view</span>
+                <span class="pill">Walk-in shower</span>
+                <span class="pill">Work nook</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="room-card">
+            <div class="room-image">
+              <img src="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                   alt="Spacious suite with seating area and balcony">
+            </div>
+            <div class="room-body">
+              <h3 class="room-title">Aurora Suite</h3>
+              <div class="room-meta">
+                Extra space for long weekends. 2–3 guests · 38 m² · Separate lounge
+              </div>
+              <div class="room-price">
+                From $290 / night, flexible check-in / checkout.
+              </div>
+              <div class="room-tags">
+                <span class="pill">Balcony</span>
+                <span class="pill">Soaking tub</span>
+                <span class="pill">Record player</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="room-card">
+            <div class="room-image">
+              <img src="https://images.pexels.com/photos/189296/pexels-photo-189296.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                   alt="Family room with two beds and lounge area">
+            </div>
+            <div class="room-body">
+              <h3 class="room-title">Family Loft</h3>
+              <div class="room-meta">
+                For small groups. 3–4 guests · 45 m² · Lofted sleeping space
+              </div>
+              <div class="room-price">
+                From $340 / night, includes kids’ breakfast.
+              </div>
+              <div class="room-tags">
+                <span class="pill">Two sleeping areas</span>
+                <span class="pill">Kitchenette</span>
+                <span class="pill">Board games</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- AMENITIES -->
+    <section class="amenities" id="amenities">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Amenities</h2>
+          <p>
+            Everything you need for a quiet stay. Nothing you don’t.
+          </p>
+        </div>
+
+        <div class="amenities-grid">
+          <div class="amenity">
+            <div class="amenity-title">Slow breakfast, every morning</div>
+            <div class="amenity-text">
+              Fresh bread, local fruit, brewed coffee, and herbal teas in the
+              sunroom from 7–11am.
+            </div>
+          </div>
+
+          <div class="amenity">
+            <div class="amenity-title">Quiet corners to work</div>
+            <div class="amenity-text">
+              A small, bright workspace with strong Wi-Fi, plenty of outlets,
+              and no background music.
+            </div>
+          </div>
+
+          <div class="amenity">
+            <div class="amenity-title">Sauna & plunge pool</div>
+            <div class="amenity-text">
+              Book a private 45-minute sauna session followed by a cold plunge
+              overlooking the harbor.
+            </div>
+          </div>
+
+          <div class="amenity">
+            <div class="amenity-title">Bicycles & coastal paths</div>
+            <div class="amenity-text">
+              Complimentary city bikes and mapped routes for slow rides
+              along the shoreline.
+            </div>
+          </div>
+
+          <div class="amenity">
+            <div class="amenity-title">Analog library</div>
+            <div class="amenity-text">
+              A small collection of novels, essays, and art books — plus
+              a few board games for long evenings.
+            </div>
+          </div>
+
+          <div class="amenity">
+            <div class="amenity-title">Thoughtful check-in</div>
+            <div class="amenity-text">
+              Minimal forms, no rush. We’ll have your room ready, your
+              preferences noted, and tea waiting.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Spaces</h2>
+          <p>
+            A quick glimpse of the hotel as it is in the quiet hours.
+          </p>
+        </div>
+
+        <div class="gallery-strip">
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                 alt="View from a balcony overlooking the sea at dusk">
+            <figcaption class="gallery-caption">
+              Balcony view, just after sunset.
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                 alt="Sunlit lounge area with minimalist furniture">
+            <figcaption class="gallery-caption">
+              Morning light in the lounge.
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                 alt="Cozy lobby seating with neutral tones">
+            <figcaption class="gallery-caption">
+              Lobby, designed for slow arrivals.
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                 alt="Minimal hotel room interior with white bedding">
+            <figcaption class="gallery-caption">
+              Harbor King, early afternoon.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / BOOKING -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Stay with us</h2>
+          <p>
+            Share the dates you’re considering and we’ll confirm availability
+            within one business day.
+          </p>
+        </div>
+
+        <div class="contact-layout">
+          <div class="contact-card">
+            <h3>Booking details</h3>
+            <p>
+              For same-week arrivals, we recommend calling directly. For
+              everything else, this form is the calmest way to start your stay.
+            </p>
+
+            <div class="contact-grid">
+              <div>
+                <div class="contact-label">Phone</div>
+                <div class="contact-highlight">+1 (555) 019-4020</div>
+              </div>
+              <div>
+                <div class="contact-label">Email</div>
+                <div class="contact-highlight">hello@aurorahotel.example</div>
+              </div>
+              <div>
+                <div class="contact-label">Address</div>
+                <div class="contact-highlight">
+                  17 Harbor Way, North Shore<br />
+                  Coastal City, CA 94000
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <form class="contact-form" onsubmit="handleFormSubmit(event)">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" required />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" required />
+              </div>
+              <div class="field">
+                <label for="dates">Preferred dates</label>
+                <input id="dates" name="dates" type="text" placeholder="e.g. June 14–17" />
+              </div>
+              <div class="field">
+                <label for="guests">Guests</label>
+                <input id="guests" name="guests" type="number" min="1" max="6" value="2" />
+              </div>
+              <div class="field">
+                <label for="notes">Notes</label>
+                <textarea id="notes" name="notes" rows="4"
+                          placeholder="Room type, special requests, arrival time…"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Send request
+              </button>
+              <div id="formMessage"
+                   style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem;"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div>© <span id="year"></span> Aurora Hotel. All rights reserved.</div>
+      <div>
+        Concept site for portfolio use. Images via
+        <a href="https://www.pexels.com/" target="_blank" rel="noreferrer">Pexels</a>.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll helper
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+
+    // Header shadow + hero zoom + parallax card
+    const header = document.getElementById("siteHeader");
+    const heroBg = document.getElementById("heroBg");
+    const parallaxCard = document.getElementById("parallaxCard");
+
+    function onScroll() {
+      const y = window.pageYOffset || document.documentElement.scrollTop;
+
+      // Header state
+      if (y > 10) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+
+      // Hero subtle zoom
+      const zoom = 1 + Math.min(y / 2000, 0.06);
+      heroBg.style.transform = "scale(" + zoom.toFixed(3) + ")";
+
+      // Parallax card slight movement
+      const cardOffset = Math.min(y / 8, 40);
+      parallaxCard.style.transform = "translateY(" + cardOffset.toFixed(1) + "px)";
+    }
+
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Fake form handler (front-end only)
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const msg = document.getElementById("formMessage");
+      msg.textContent = "Thank you. We’ve received your request and will respond shortly.";
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>

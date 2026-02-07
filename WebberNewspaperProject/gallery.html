@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class = "gallery-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web News</title>
+    <link rel = "stylesheet" href = "css/stylesheet.css">
+</head>
+<body class = "gallery-body">
+    <header>
+        <h1>Web News</h1>
+            <nav>
+                <ul>
+                    <li><a href = "landingPage.html">Landing Page</a> </li>
+                    <li><a href = "article.html">Article</a> </li>
+                </ul>
+            </nav>
+    </header>
+
+    <main class = "photo-gallery">
+        <div class = "photos"><img src = "images/MT1.jpg" alt = "Monster Truck 1!"></div>
+        <div class = "photos"><img src = "images/MT2.jpg" alt = "Monster Truck 2!"></div>
+        <div class = "photos"><img src = "images/MT3.jpg" alt = "Monster Truck 3!"></div>
+    </main>
+
+    <div class = "gallery-controls">
+        <button id = "prev">Previous</button>
+        <button id = "next">Next</button>
+    </div>
+
+    <script>
+        const photos = document.querySelectorAll('.photos');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        let currentIndex = 0;
+
+        function showImage(index) {
+            photos.forEach((photo, i) => {
+                photo.style.display = i === index ? 'block' : 'none';
+            })
+        }
+
+        showImage(currentIndex);
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1: photos.length - 1;
+            showImage(currentIndex);
+        });
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex < photos.length - 1) ? currentIndex + 1: 0;
+            showImage(currentIndex);
+        });
+
+    </script>
+
+</body>
+</html>
